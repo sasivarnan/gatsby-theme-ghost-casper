@@ -52,7 +52,7 @@ class BlogIndex extends React.Component {
   }
 }
 
-export default BlogIndex
+export default BlogIndex;
 
 export const pageQuery = graphql`
   query {
@@ -67,22 +67,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "DD MMMM, YYYY")
-            title
-            featuredImage { 
-              childImageSharp {
-                fluid(maxWidth: 3720) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
-          }
-          timeToRead
+          ...PostCardFragment
         }
       }
     }

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { graphql } from 'gatsby';
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 import PostList from '../components/PostList';
@@ -12,6 +13,9 @@ const TagTemplate = ({ pageContext, data, location }) => {
 
   return (
     <Layout location={location}>
+      <Helmet>
+        <body className='tag-template' />
+      </Helmet>
       <header className='site-header outer {{#if feature_image}}'>
         {/* // style='background-image: url({{feature_image}}){{else}}no-cover{{/if}}'> */}
         <div className='inner'>
@@ -56,15 +60,8 @@ export const pageQuery = graphql`
     ) {
       totalCount
       edges {
-        node {
-          frontmatter {
-            title
-          }
-          fields {
-            slug
-          }
-          excerpt
-          timeToRead
+        node{
+          ...PostCardFragment
         }
       }
     } 

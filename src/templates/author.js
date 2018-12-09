@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { graphql } from 'gatsby';
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 import PostList from '../components/PostList';
@@ -18,6 +19,9 @@ const AuthorTemplate = ({ pageContext, data, location }) => {
 
   return (
     <Layout location={location}>
+      <Helmet>
+        <body className='author-template' />
+      </Helmet>
       <header className='site-header outer {{#if feature_image}}'>
         {/* // style='background-image: url({{feature_image}}){{else}}no-cover{{/if}}'> */}
         <div className='inner'>
@@ -96,17 +100,7 @@ export const pageQuery = graphql`
     totalCount
     edges {
       node {
-        frontmatter {
-          title
-          author {
-            id
-          }
-        }
-        fields {
-          slug
-        }
-        excerpt
-				timeToRead
+        ...PostCardFragment
       }
     }
   }

@@ -60,15 +60,17 @@ exports.createPages = ({ graphql, actions }) => {
           const next = index === 0 ? null : posts[index - 1].node;
           const tags = post.node.frontmatter.tags;
 
+          const context = {
+            slug: post.node.fields.slug,
+            primaryTag: tags ? tags[0] : '',
+            previous: _.get(previous, 'fields.slug', ''),
+            next: _.get(next, 'fields.slug', ''),
+          };
+          
           createPage({
             path: post.node.fields.slug,
             component: blogPostTemplate,
-            context: {
-              slug: post.node.fields.slug,
-              primaryTag: tags ? tags[0] : '',
-              previous,
-              next,
-            },
+            context,
           })
 
           allTags = allTags.concat(tags);

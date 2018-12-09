@@ -38,22 +38,7 @@ const NotFoundPage = ({ location }) => (
           posts : allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC } , limit: 3) {
             edges {
               node {
-                excerpt
-                fields {
-                  slug
-                }
-                frontmatter {
-                  date(formatString: "DD MMMM, YYYY")
-                  title
-                  featuredImage {
-                    childImageSharp {
-                      fluid(maxWidth: 3720) {
-                        ...GatsbyImageSharpFluid
-                      }
-                    }
-                  }
-                }
-                timeToRead
+                ...PostCardFragment
               }
             }
           }

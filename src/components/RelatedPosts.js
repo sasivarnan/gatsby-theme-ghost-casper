@@ -1,9 +1,7 @@
-// TODO: Place graphql in a single place
-import { graphql, StaticQuery, Link } from 'gatsby';
+import { Link } from 'gatsby';
 import React from 'react';
 import PostCard from './PostCard';
 
-// import { PostListingQuery } from '../utils/graphql/queries';
 import Icons from './Icons';
 
 const RelatedPosts = (props) => {
@@ -39,10 +37,11 @@ const RelatedPosts = (props) => {
             </ul>
           </div>
           <footer className='read-next-card-footer'>
-            <Link to=''>
+            <Link to={`/tag/${props.primaryTag}`}>
               {
-                totalPosts === 0 ? 'No posts'
-                  : (totalPosts === 1 ? '1 post' : `See all ${totalPosts} posts`)
+                totalPosts === 0 ?
+                  'No posts' :
+                  (totalPosts === 1 ? '1 post' : `See all ${totalPosts} posts`)
               } →
             </Link>
           </footer>

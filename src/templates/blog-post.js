@@ -89,7 +89,7 @@ class BlogPostTemplate extends React.Component {
     event.preventDefault();
 
     const site = event.currentTarget.dataset.shareSite,
-      post = this.props.data.markdownRemark,
+      post = this.props.data.post,
       postTitle = post.frontmatter.title,
       url = this.props.location.href;
 
@@ -117,9 +117,9 @@ class BlogPostTemplate extends React.Component {
   render() {
 
     const { data, pageContext, location } = this.props;
-
-    const post = data.markdownRemark,
-      { frontmatter, fields } = post;
+    const { post, previousPost, nextPost } = data;
+    const { frontmatter, fields } = post;
+    const { tags, featuredImage } = frontmatter;
 
     const siteTitle = get(this.props, 'data.site.siteMetadata.title'),
       siteUrl = get(this.props, 'data.site.siteMetadata.siteUrl'),
@@ -127,8 +127,7 @@ class BlogPostTemplate extends React.Component {
       postTitle = frontmatter.title,
       slug = fields.slug;
 
-    const { primaryTag, previous, next } = pageContext,
-      featuredImage = frontmatter.featuredImage,
+    const { primaryTag } = pageContext,
       relatedPosts = data.relatedPosts,
       titleToShow = `${postTitle} | ${siteTitle}`;
 
@@ -163,16 +162,15 @@ class BlogPostTemplate extends React.Component {
                   <time className='post-full-meta-date' dateTime='{frontmatter.date}'>
                     {frontmatter.date}
                   </time>
+                  <span className='date-divider'>/</span>
                   {
-                    primaryTag &&
-                    <React.Fragment>
-                      <span className='date-divider'>/</span>
-                      <Link to={`/tag/${primaryTag}`} rel=''>
-                        {primaryTag}
-                      </Link>
-                    </React.Fragment>
+                    tags.map((tag, index) => {
+                      return <React.Fragment>
+                        <Link to={`/tag/${tag}`} rel=''> {tag} </Link>
+                        {(index !== tags.length - 1) && <span> ,&nbsp;</span>}
+                      </React.Fragment>
+                    })
                   }
-
                 </div>
                 <h1
                   className='post-full-title js-foating-header-trigger js-no-widows'
@@ -189,20 +187,22 @@ class BlogPostTemplate extends React.Component {
 
               <Author author={frontmatter.author} />
 
-              <section className="post-full-comments">
-                <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
-              </section>
+              {
+                process.env.NODE_ENV === "production" &&
+                <section className="post-full-comments">
+                  <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
+                </section>
+              }
             </article>
           </div>
         </main>
 
-
         <RelatedPosts
-          tag={primaryTag}
+          primaryTag={primaryTag}
           siteTitle={siteTitle}
           relatedPosts={relatedPosts}
-          previousPost={previous}
-          nextPost={next} />
+          previousPost={previousPost}
+          nextPost={nextPost} />
 
         <div className='floating-header' ref={this.headerRef}>
           <div className='floating-header-logo'>
@@ -230,19 +230,16 @@ class BlogPostTemplate extends React.Component {
             </div>
           </progress>
         </div>
-        {/* <Link to={previous.fields.slug} rel='prev'>
-          {primaryTag}
-        </Link> */}
 
       </Layout>
     )
   }
 }
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!, $primaryTag: String) {
+  query BlogPostBySlug($slug: String!, $primaryTag: String, $previous: String, $next: String) {
       site {
        siteMetadata {
         title
@@ -277,8 +274,16 @@ export const pageQuery = graphql`
         }
       }
     }
-  
-    markdownRemark(fields: {slug: {eq: $slug } }) {
+
+    previousPost: markdownRemark(fields: {slug: {eq: $previous } }) {
+      ...PostCardFragment
+    }
+
+    nextPost: markdownRemark(fields: {slug: {eq: $next } }) {
+      ...PostCardFragment
+    }
+
+    post: markdownRemark(fields: {slug: {eq: $slug } }) {
       id
       excerpt
       html
