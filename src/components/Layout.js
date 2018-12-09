@@ -16,7 +16,7 @@ class Template extends React.Component {
   }
 
   render() {
-    const { location, children } = this.props
+    const { location, children, hideFooter } = this.props
     const rootPath = `${__PATH_PREFIX__}/`;
     let bodyClass = '';
 
@@ -40,8 +40,10 @@ class Template extends React.Component {
 
         {children}
 
-        <StaticQuery
-          query={graphql`
+        {
+          !hideFooter &&
+          <StaticQuery
+            query={graphql`
             {
               site {
                 siteMetadata {
@@ -54,29 +56,29 @@ class Template extends React.Component {
               }
             }          
           `
-          }
-          render={data => {
-            const { title, social } = data.site.siteMetadata;
-            const { facebook, twitter } = social;
-            return (
-              <footer className='site-footer outer'>
-                <div className='site-footer-content inner'>
-                  <section className='copyright'>
-                    <a href='/'> {title} </a> &copy; {this.state.currentYear}
-                  </section>
-                  <nav className='site-footer-nav'>
-                    <Link to='/'>Latest Posts</Link>
-                    <a href={getSocialUrl('facebook', facebook)} target='_blank' rel='noopener'>Facebook</a>
-                    <a href={getSocialUrl('twitter', twitter)} target='_blank' rel='noopener'>Twitter</a>
-                    <a href='https://gatsbyjs.org' target='_blank' rel='noopener'>Powered By Gatsby</a>
-                  </nav>
-                </div>
-              </footer>
-            )
-          }
-          }
-        />
-
+            }
+            render={data => {
+              const { title, social } = data.site.siteMetadata;
+              const { facebook, twitter } = social;
+              return (
+                <footer className='site-footer outer'>
+                  <div className='site-footer-content inner'>
+                    <section className='copyright'>
+                      <a href='/'> {title} </a> &copy; {this.state.currentYear}
+                    </section>
+                    <nav className='site-footer-nav'>
+                      <Link to='/'>Latest Posts</Link>
+                      <a href={getSocialUrl('facebook', facebook)} target='_blank' rel='noopener'>Facebook</a>
+                      <a href={getSocialUrl('twitter', twitter)} target='_blank' rel='noopener'>Twitter</a>
+                      <a href='https://gatsbyjs.org' target='_blank' rel='noopener'>Powered By Gatsby</a>
+                    </nav>
+                  </div>
+                </footer>
+              )
+            }
+            }
+          />
+        }
       </div>
     )
   }
