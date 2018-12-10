@@ -258,6 +258,7 @@ export const pageQuery = graphql`
           tags: {
               in: [$primaryTag]
           }
+          draft: {ne: true}
         }
       }
     ) {

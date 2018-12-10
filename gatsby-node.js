@@ -14,7 +14,11 @@ exports.createPages = ({ graphql, actions }) => {
     resolve(
       graphql(
         `{
-          allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC}, limit: 1000) {
+          allMarkdownRemark(
+            sort: {fields: [frontmatter___date], order: DESC}, 
+            ${process.env.NODE_ENV === 'production' ? 'filter: {frontmatter: {draft: {ne: true}}}' : ''}
+            limit: 1000
+          ) {
             edges {
               node {
                 fields {
@@ -58,7 +62,7 @@ exports.createPages = ({ graphql, actions }) => {
         _.each(posts, (post, index) => {
           const previous = index === posts.length - 1 ? null : posts[index + 1].node;
           const next = index === 0 ? null : posts[index - 1].node;
-          const tags = post.node.frontmatter.tags;
+          const { tags } = post.node.frontmatter;
 
           const context = {
             slug: post.node.fields.slug,
@@ -66,12 +70,12 @@ exports.createPages = ({ graphql, actions }) => {
             previous: _.get(previous, 'fields.slug', ''),
             next: _.get(next, 'fields.slug', ''),
           };
-          
+
           createPage({
             path: post.node.fields.slug,
             component: blogPostTemplate,
             context,
-          })
+          });
 
           allTags = allTags.concat(tags);
         })

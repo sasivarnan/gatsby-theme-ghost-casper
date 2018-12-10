@@ -4,6 +4,7 @@ date: '2018-11-24'
 tags: [ 'general' ]
 author: sasivarnan
 featuredImage: ./welcome.jpg
+draft: false
 ---
 
 `01001000 01100101 01101100 01101100 01101111` 
