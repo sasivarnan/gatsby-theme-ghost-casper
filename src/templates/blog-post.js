@@ -165,7 +165,7 @@ class BlogPostTemplate extends React.Component {
                   <span className='date-divider'>/</span>
                   {
                     tags.map((tag, index) => {
-                      return <React.Fragment>
+                      return <React.Fragment key={tag}>
                         <Link to={`/tag/${tag}`} rel=''> {tag} </Link>
                         {(index !== tags.length - 1) && <span> ,&nbsp;</span>}
                       </React.Fragment>
@@ -197,12 +197,15 @@ class BlogPostTemplate extends React.Component {
           </div>
         </main>
 
-        <RelatedPosts
-          primaryTag={primaryTag}
-          siteTitle={siteTitle}
-          relatedPosts={relatedPosts}
-          previousPost={previousPost}
-          nextPost={nextPost} />
+        {
+          relatedPosts &&
+          <RelatedPosts
+            primaryTag={primaryTag}
+            siteTitle={siteTitle}
+            relatedPosts={relatedPosts}
+            previousPost={previousPost}
+            nextPost={nextPost} />
+        }
 
         <div className='floating-header' ref={this.headerRef}>
           <div className='floating-header-logo'>

@@ -9,7 +9,7 @@ const AuthorsList = ({ author }) => {
   return (
     <ul className="author-list">
       {authors.map(author =>
-        <li className="author-list-item">
+        <li key={author.id} className="author-list-item">
 
           <div className="author-name-tooltip">
             {author.name}
