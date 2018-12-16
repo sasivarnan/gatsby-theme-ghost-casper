@@ -18,7 +18,7 @@ const RelatedPosts = (props) => {
           <header className='read-next-card-header'>
             <small className='read-next-card-header-sitetitle'>&mdash; {props.siteTitle} &mdash;</small>
             <h3 className='read-next-card-header-title'>
-              <Link to={`/tag/${props.tag}`}>{props.tag}</Link>
+              <Link to={`/tag/${props.primaryTag}`}>{props.primaryTag}</Link>
             </h3>
           </header>
           <div className='read-next-divider'>

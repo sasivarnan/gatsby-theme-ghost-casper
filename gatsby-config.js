@@ -59,27 +59,63 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: `UA-129019237-1`,
-      },
-    },
-    `gatsby-plugin-feed`,
     `gatsby-plugin-sitemap`,
-    {
-      resolve: "gatsby-plugin-guess-js",
-      options: {
-        // Find the view id in the GA admin in a section labeled "views"
-        GAViewID: `184855678`,
-        minimumThreshold: 0.03,
-        // The "period" for fetching analytic data.
-        period: {
-          startDate: new Date("2018-12-1"),
-          endDate: new Date(),
+    ...(
+      process.env.NODE_ENV === 'production' ? [
+        {
+          resolve: "gatsby-plugin-guess-js",
+          options: {
+            // Find the view id in the GA admin in a section labeled "views"
+            GAViewID: `184855678`,
+            minimumThreshold: 0.03,
+            // The "period" for fetching analytic data.
+            period: {
+              startDate: new Date("2018-12-1"),
+              endDate: new Date(),
+            },
+          },
         },
-      },
-    },
+        {
+          resolve: `gatsby-plugin-google-analytics`,
+          options: {
+            trackingId: `UA-129019237-1`,
+          },
+        },
+        {
+          resolve: `gatsby-plugin-feed`,
+          options: {
+            feeds: [
+              {
+                query: `
+              {
+                allMarkdownRemark(
+                  limit: 1000,
+                  sort: {order: DESC, fields: [frontmatter___date]},
+                  filter: {frontmatter: {draft: {ne: true}}}
+                ) {
+                  edges {
+                    node {
+                      excerpt
+                      html
+                      fields {
+                        slug
+                      }
+                      frontmatter {
+                        title
+                        date
+                      }
+                    }
+                  }
+                }
+              }            
+              `,
+                output: `rss.xml`
+              },
+            ]
+          }
+        },
+      ] : []
+    ),
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
