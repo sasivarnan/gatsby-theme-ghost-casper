@@ -30,13 +30,14 @@ const Header = ({ siteMetadata, location }) => (
 
 class BlogIndex extends React.Component {
   render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title')
+    const siteTitle = get(this, 'props.data.site.siteMetadata.title');
+    const postsPerPage = get(this, 'props.data.site.siteMetadata.config.postsPerPage');
     const siteDescription = get(
       this,
       'props.data.site.siteMetadata.description'
     )
-    const posts = get(this, 'props.data.allMarkdownRemark.edges')
-    const location = this.props.location
+    const posts = get(this, 'props.data.allMarkdownRemark.edges');
+    const location = this.props.location;
 
     return (
       <Layout location={this.props.location}>
@@ -46,7 +47,7 @@ class BlogIndex extends React.Component {
           title={siteTitle}
         />
         <Header siteMetadata={this.props.data.site.siteMetadata} location={location} />
-        <PostList posts={posts} postsPerPage={10} />
+        <PostList posts={posts} postsPerPage={postsPerPage} />
       </Layout>
     )
   }
@@ -60,6 +61,9 @@ export const pageQuery = graphql`
       siteMetadata {
         title
         description
+        config {
+          postsPerPage
+        }
       }
     }
     allMarkdownRemark(

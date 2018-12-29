@@ -123,6 +123,7 @@ class BlogPostTemplate extends React.Component {
 
     const siteTitle = get(this.props, 'data.site.siteMetadata.title'),
       siteUrl = get(this.props, 'data.site.siteMetadata.siteUrl'),
+      disqusShortname = get(this.props, 'data.site.siteMetadata.config.disqus'),
       siteDescription = post.excerpt,
       postTitle = frontmatter.title,
       slug = fields.slug;
@@ -131,18 +132,24 @@ class BlogPostTemplate extends React.Component {
       relatedPosts = data.relatedPosts,
       titleToShow = `${postTitle} | ${siteTitle}`;
 
-    const disqusShortname = 'geekscreed',
-      disqusConfig = {
-        url: location.href,
-        identifier: slug,
-        title: titleToShow,
-      };
+    const disqusConfig = {
+      url: location.href,
+      identifier: slug,
+      title: titleToShow,
+    };
 
     return (
       <Layout location={location}>
 
         <Helmet
-          meta={[{ name: 'description', content: siteDescription }]}
+          meta={[
+            { name: 'description', content: siteDescription },
+            { name: 'twitter:card', content: 'summary_large_image' },
+            {
+              name: 'twitter:image',
+              content: `${siteUrl}${slug}twitter-card.jpg`
+            }
+          ]}
           title={titleToShow}
         />
 
@@ -188,7 +195,7 @@ class BlogPostTemplate extends React.Component {
               <Author author={frontmatter.author} />
 
               {
-                process.env.NODE_ENV === "production" &&
+                (process.env.NODE_ENV === "production" && disqusShortname) &&
                 <section className="post-full-comments">
                   <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
                 </section>
@@ -247,6 +254,9 @@ export const pageQuery = graphql`
        siteMetadata {
         title
         siteUrl
+        config { 
+          disqus
+        }
       }
     }
   

@@ -10,10 +10,11 @@ import Navigation from '../components/Navigation';
 const TagTemplate = ({ pageContext, data, location }) => {
   const { tag } = pageContext;
   const { edges, totalCount } = data.allMarkdownRemark;
+  const { title } = data.site.siteMetadata;
 
   return (
     <Layout location={location}>
-      <Helmet>
+      <Helmet title={`Posts tagged under ${tag} - ${title}`}>
         <body className='tag-template' />
       </Helmet>
       <header className='site-header outer {{#if feature_image}}'>

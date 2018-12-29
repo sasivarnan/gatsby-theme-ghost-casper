@@ -70,6 +70,7 @@ class Template extends React.Component {
                       <Link to='/'>Latest Posts</Link>
                       <a href={getSocialUrl('facebook', facebook)} target='_blank' rel='noopener'>Facebook</a>
                       <a href={getSocialUrl('twitter', twitter)} target='_blank' rel='noopener'>Twitter</a>
+                      <a href='https://ghost.org' target='_blank' rel='noopener'>Theme By Ghost</a>
                       <a href='https://gatsbyjs.org' target='_blank' rel='noopener'>Powered By Gatsby</a>
                     </nav>
                   </div>

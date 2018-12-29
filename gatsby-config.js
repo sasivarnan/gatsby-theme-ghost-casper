@@ -3,7 +3,7 @@ module.exports = {
     title: 'GeeksCreed',
     author: 'Sasivarnan R',
     description: 'Blog for Geeks and Hobbyists',
-    siteUrl: 'https://geekscreed.com/',
+    siteUrl: 'https://geekscreed.com',
     cover_image: '',
     social: {
       twitter: 'g33kscr33d',
@@ -13,6 +13,7 @@ module.exports = {
     },
     config: {
       postsPerPage: 10,
+      disqus: 'geekscreed'
     }
   },
   // pathPrefix: '/geekscreed.com',
@@ -47,6 +48,7 @@ module.exports = {
           'gatsby-remark-prismjs',
           'gatsby-remark-copy-linked-files',
           'gatsby-remark-smartypants',
+          `gatsby-remark-social-cards`,
         ],
       },
     },

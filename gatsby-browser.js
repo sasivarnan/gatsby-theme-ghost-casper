@@ -1,1 +1,1 @@
-require("prism-themes/themes/prism-a11y-dark.css")
+require("prismjs/themes/prism-coy.css");

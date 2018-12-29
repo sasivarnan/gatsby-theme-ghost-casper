@@ -74,7 +74,7 @@ const Navigation = ({ location }) => (
               }
             </div>
             {/* <a className='subscribe-button' href='#subscribe'>Subscribe</a> */}
-            <a className='rss-button' href={`https://feedly.com/i/subscription/feed/${siteMetadata.siteUrl}rss.xml`} target='_blank' rel='noopener'>
+            <a className='rss-button' href={`https://feedly.com/i/subscription/feed/${siteMetadata.siteUrl}/rss.xml`} target='_blank' rel='noopener'>
               <Icons.rss />
             </a>
           </div>

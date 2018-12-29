@@ -11,7 +11,7 @@ import { getSocialUrl } from '../utils/url';
 
 const AuthorTemplate = ({ pageContext, data, location }) => {
   const { author } = pageContext;
-  const { siteUrl } = data.site.siteMetadata;
+  const { title, siteUrl } = data.site.siteMetadata;
   const { posts, navItems } = data;
   const { edges, totalCount } = posts;
 
@@ -19,7 +19,7 @@ const AuthorTemplate = ({ pageContext, data, location }) => {
 
   return (
     <Layout location={location}>
-      <Helmet>
+      <Helmet title={`Posts By ${author.name} - ${title}` }>
         <body className='author-template' />
       </Helmet>
       <header className='site-header outer {{#if feature_image}}'>
@@ -66,7 +66,7 @@ const AuthorTemplate = ({ pageContext, data, location }) => {
                   <Icons.facebook />
                 </a>
               }
-              <a className='social-link social-link-rss' href={`https://feedly.com/i/subscription/feed/${siteUrl}rss/`} target='_blank' rel='noopener'>
+              <a className='social-link social-link-rss' href={`https://feedly.com/i/subscription/feed/${siteUrl}/rss.xml`} target='_blank' rel='noopener'>
                 <Icons.rss />
               </a>
             </div>
@@ -85,6 +85,7 @@ export const pageQuery = graphql`
 {
   site {
     siteMetadata {
+      title
       siteUrl
     }
   }

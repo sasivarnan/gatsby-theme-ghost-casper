@@ -919,7 +919,7 @@ Usage (In Ghost editor):
     word-break: break-all;
 }
 
-.post-full-content pre {
+/* .post-full-content pre {
     overflow-x: auto;
     margin: 1.5em 0 3em;
     padding: 20px;
@@ -937,7 +937,7 @@ Usage (In Ghost editor):
     font-size: inherit;
     line-height: inherit;
     background: transparent;
-}
+} */
 
 .post-full-content pre code :not(span) {
     color: inherit;
