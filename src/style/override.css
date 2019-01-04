@@ -33,3 +33,13 @@
   line-height: inherit;
   /* background: transparent; */
 } 
+
+.post-full-content a {
+  box-shadow: none;
+}
+
+.post-full-content pre {
+  padding: 1px;
+  overflow-x: visible;
+  margin-bottom: 2em;
+}

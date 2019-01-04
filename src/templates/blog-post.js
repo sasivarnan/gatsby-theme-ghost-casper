@@ -124,6 +124,8 @@ class BlogPostTemplate extends React.Component {
     const siteTitle = get(this.props, 'data.site.siteMetadata.title'),
       siteUrl = get(this.props, 'data.site.siteMetadata.siteUrl'),
       disqusShortname = get(this.props, 'data.site.siteMetadata.config.disqus'),
+      creatorTwitter = get(frontmatter, 'author.twitter'),
+      siteTwitter= get(this.props, 'data.site.siteMetadata.social.twitter'),
       siteDescription = post.excerpt,
       postTitle = frontmatter.title,
       slug = fields.slug;
@@ -144,11 +146,14 @@ class BlogPostTemplate extends React.Component {
         <Helmet
           meta={[
             { name: 'description', content: siteDescription },
+            { name: 'twitter:site', content: `@${siteTwitter}` },
+            { name: 'twitter:creator', content: `@${creatorTwitter}` },
             { name: 'twitter:card', content: 'summary_large_image' },
-            {
-              name: 'twitter:image',
-              content: `${siteUrl}${slug}twitter-card.jpg`
-            }
+            { property: 'og:url', content: `${siteUrl}${slug}` },
+            { property: 'og:type', content: 'article' },
+            { property: 'og:title', content: titleToShow },
+            { property: 'og:description', content: siteDescription },
+            { property: 'og:image', content: `${siteUrl}${featuredImage.childImageSharp.fluid.src}` }
           ]}
           title={titleToShow}
         />
@@ -195,8 +200,8 @@ class BlogPostTemplate extends React.Component {
               <Author author={frontmatter.author} />
 
               {
-                (process.env.NODE_ENV === "production" && disqusShortname) &&
-                <section className="post-full-comments">
+                (process.env.NODE_ENV === 'production' && disqusShortname) &&
+                <section className='post-full-comments'>
                   <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
                 </section>
               }
@@ -256,6 +261,9 @@ export const pageQuery = graphql`
         siteUrl
         config { 
           disqus
+        }
+        social {
+          twitter
         }
       }
     }

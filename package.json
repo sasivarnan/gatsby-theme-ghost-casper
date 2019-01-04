@@ -7,15 +7,15 @@
     "url": "https://github.com/GeeksCreed/geekscreed.com/issues"
   },
   "dependencies": {
-    "autoprefixer": "^9.4.3",
+    "autoprefixer": "^9.4.4",
     "cssnano": "^4.1.8",
     "disqus-react": "^1.0.5",
-    "gatsby": "^2.0.77",
+    "gatsby": "^2.0.83",
     "gatsby-image": "^2.0.25",
     "gatsby-plugin-feed": "^2.0.11",
     "gatsby-plugin-google-analytics": "^2.0.8",
     "gatsby-plugin-guess-js": "^1.0.3",
-    "gatsby-plugin-manifest": "^2.0.12",
+    "gatsby-plugin-manifest": "^2.0.13",
     "gatsby-plugin-offline": "^2.0.20",
     "gatsby-plugin-postcss": "^2.0.2",
     "gatsby-plugin-react-helmet": "^3.0.5",
@@ -27,10 +27,9 @@
     "gatsby-remark-prismjs": "^2.0.5",
     "gatsby-remark-responsive-iframe": "^2.0.8",
     "gatsby-remark-smartypants": "^2.0.7",
-    "gatsby-remark-social-cards": "^0.4.0",
     "gatsby-source-filesystem": "^2.0.12",
-    "gatsby-transformer-remark": "^2.1.17",
-    "gatsby-transformer-sharp": "^2.1.9",
+    "gatsby-transformer-remark": "^2.1.19",
+    "gatsby-transformer-sharp": "^2.1.10",
     "gatsby-transformer-yaml": "^2.1.6",
     "lodash": "^4.17.11",
     "postcss-color-function": "^4.0.1",
@@ -44,7 +43,7 @@
   },
   "devDependencies": {
     "eslint": "^4.19.1",
-    "eslint-plugin-react": "^7.12.0",
+    "eslint-plugin-react": "^7.12.2",
     "gh-pages": "^2.0.1",
     "prettier": "^1.15.3"
   },
@@ -65,7 +64,7 @@
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js' 'src/**/*.md'",
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public -u \"Sasivarnan R <sasivarnan@hotmail.com>\"",
     "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js"
   }
 }
