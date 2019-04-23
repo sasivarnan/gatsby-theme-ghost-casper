@@ -1,42 +1,48 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import get from 'lodash/get'
-import Helmet from 'react-helmet'
+import React from 'react';
+import { graphql } from 'gatsby';
+import get from 'lodash/get';
+import Helmet from 'react-helmet';
+import GatsbyImage from 'gatsby-image';
 
-import Layout from '../components/Layout'
-import PostList from '../components/PostList'
+import Layout from '../components/Layout';
+import PostList from '../components/PostList';
 import Navigation from '../components/Navigation';
 
 import logo from '../assets/logo.png';
 
-const Header = ({ siteMetadata, location }) => (
-  <header className='site-header outer {{#if @blog.cover_image}}'>
-    {/* // style='background-image: url({{@blog.cover_image}}){{else}}no-cover{{/if}}'> */}
-    <div className='inner'>
-      <div className='site-header-content'>
-        <h1 className='site-title'>
-          {/* TODO */}
-          {logo ?
+const Header = ({ siteMetadata, location, featuredImage }) => {
+  return (
+    <header className={`site-header outer ${featuredImage ? '' : 'no-cover'}`}>
+      {featuredImage && (
+        <GatsbyImage className='featured-image' fluid={featuredImage.fluid} />
+      )}
+      <div className='inner'>
+        <div className='site-header-content'>
+          <h1 className='site-title'>
             <img className='site-logo' src={logo} alt={siteMetadata.title} />
-            : siteMetadata.title
-          }
-        </h1>
-        <h2 className='site-description'>{siteMetadata.description}</h2>
+          </h1>
+          <h2 className='site-description'>{siteMetadata.description}</h2>
+        </div>
+        <Navigation location={location} />
       </div>
-      <Navigation location={location} />
-    </div>
-  </header>
-);
+    </header>
+  );
+};
 
 class BlogIndex extends React.Component {
   render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title');
-    const postsPerPage = get(this, 'props.data.site.siteMetadata.config.postsPerPage');
-    const siteDescription = get(
-      this,
-      'props.data.site.siteMetadata.description'
-    )
-    const posts = get(this, 'props.data.allMarkdownRemark.edges');
+    const siteTitle = get(this, 'props.data.site.siteMetadata.title'),
+      postsPerPage = get(
+        this,
+        'props.data.site.siteMetadata.config.postsPerPage'
+      ),
+      siteDescription = get(this, 'props.data.site.siteMetadata.description'),
+      posts = get(this, 'props.data.allMarkdownRemark.edges'),
+      featuredImage = get(
+        this,
+        'props.data.featuredImage.edges[0].node.childImageSharp'
+      );
+
     const location = this.props.location;
 
     return (
@@ -44,12 +50,19 @@ class BlogIndex extends React.Component {
         <Helmet
           htmlAttributes={{ lang: 'en' }}
           meta={[{ name: 'description', content: siteDescription }]}
-          title={siteTitle}
+          title={`${siteTitle} - ${siteDescription}`}
+          bodyAttributes={{
+            class: 'home-template',
+          }}
         />
-        <Header siteMetadata={this.props.data.site.siteMetadata} location={location} />
+        <Header
+          siteMetadata={this.props.data.site.siteMetadata}
+          featuredImage={featuredImage}
+          location={location}
+        />
         <PostList posts={posts} postsPerPage={postsPerPage} />
       </Layout>
-    )
+    );
   }
 }
 
@@ -66,9 +79,27 @@ export const pageQuery = graphql`
         }
       }
     }
+
+    featuredImage: allFile(
+      filter: {
+        sourceInstanceName: { eq: "assets" }
+        relativePath: { eq: "featured-image.jpg" }
+      }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1600, quality: 100) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    }
+
     allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC },
-      filter: {frontmatter: {draft: {ne: true}}}
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { frontmatter: { draft: { ne: true } } }
     ) {
       edges {
         node {
@@ -77,4 +108,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

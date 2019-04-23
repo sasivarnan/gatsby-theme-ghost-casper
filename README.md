@@ -1,10 +1,36 @@
-# geekscreed.com
+# gatsby-theme-ghost-casper
 
-Gatsby starter for creating a blog
+Ghost casper theme for Gatsby blog.
 
-Install this starter (assuming Gatsby is installed) by running from your CLI:
+## Features
 
-`gatsby new gatsby-blog https://github.com/sasivarnan/geekscreed.com`
+1. Drafts Post Support
+2. Disqus Embed Support
 
-## Running in development
-`gatsby develop`
+## Usage
+
+Install the theme using `npm` or `yarn`
+
+```bash
+npm i gatsby-theme-ghost-casper
+```
+
+or
+
+```bash
+yarn add gatsby-theme-ghost-casper
+```
+
+In your `gatsby-config.js` file,
+
+```js
+module.exports = {
+  __experimentalThemes: ['gatsby-theme-ghost-casper'],
+};
+```
+
+## Example Site
+
+- GeeksCreed - [Source](https://github.com/geekscreed/geekscreed.com/), [Demo](https://geekscreed.com/)
+
+For detailed usage of gatsby themes, refer [themes documentation](https://www.gatsbyjs.org/docs/themes/) of Gatsby.

@@ -1,9 +1,5 @@
 import React from 'react';
 import Layout from '../components/Layout';
-const PageLayout = () => (
-  <Layout>
+const PageLayout = () => <Layout />;
 
-  </Layout>
-)
-
-export default PageLayout
+export default PageLayout;

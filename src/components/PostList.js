@@ -4,12 +4,11 @@ import PostCard from './PostCard';
 const SCROLL_BUFFER = 100;
 
 export default class PostList extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      postsToShow: props.postsPerPage
-    }
+      postsToShow: props.postsPerPage,
+    };
 
     this.maxPages = props.posts.length;
     this.ticking = false;
@@ -29,21 +28,26 @@ export default class PostList extends React.Component {
       this.ticking = true;
       requestAnimationFrame(() => this.update());
     }
-  }
+  };
 
   update = () => {
-    const distaneToBottom = document.documentElement.offsetHeight - (window.scrollY + window.innerHeight);
+    const distaneToBottom =
+      document.documentElement.offsetHeight -
+      (window.scrollY + window.innerHeight);
     if (distaneToBottom < SCROLL_BUFFER) {
       // console.log('BU', this.state);
-      this.setState({
-        postsToShow: this.state.postsToShow + this.props.postsPerPage
-      }, () => {
-        if (this.state.postsToShow >= this.maxPages)
-          window.removeEventListener('scroll', this.handleScroll);
-      });
+      this.setState(
+        {
+          postsToShow: this.state.postsToShow + this.props.postsPerPage,
+        },
+        () => {
+          if (this.state.postsToShow >= this.maxPages)
+            window.removeEventListener('scroll', this.handleScroll);
+        }
+      );
     }
     this.ticking = false;
-  }
+  };
 
   render() {
     const { posts } = this.props;
@@ -52,11 +56,12 @@ export default class PostList extends React.Component {
       <main id='site-main' className='site-main outer'>
         <div className='inner'>
           <div className='post-feed'>
-            {posts.slice(0, this.state.postsToShow).map((post, index) => <PostCard key={index} post={post.node} />)}
+            {posts.slice(0, this.state.postsToShow).map((post, index) => (
+              <PostCard key={index} post={post.node} />
+            ))}
           </div>
         </div>
       </main>
-    )
+    );
   }
-
 }

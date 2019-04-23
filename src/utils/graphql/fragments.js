@@ -1,4 +1,4 @@
-import { graphql } from "gatsby";
+import { graphql } from 'gatsby';
 
 export const postCardFragment = graphql`
   fragment PostCardFragment on MarkdownRemark {
@@ -15,7 +15,7 @@ export const postCardFragment = graphql`
         profileImage
       }
       tags
-      featuredImage { 
+      featuredImage {
         childImageSharp {
           fluid(maxWidth: 3720) {
             ...GatsbyImageSharpFluid
@@ -24,4 +24,5 @@ export const postCardFragment = graphql`
       }
     }
     timeToRead
-  }`;
+  }
+`;

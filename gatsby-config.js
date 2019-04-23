@@ -1,22 +1,23 @@
+const path = require('path');
+
 module.exports = {
   siteMetadata: {
-    title: 'GeeksCreed',
+    title: 'Casper Theme Gatsby',
     author: 'Sasivarnan R',
-    description: 'Blog for Geeks and Hobbyists',
+    description: 'Ghost Casper theme for Gatsby',
     siteUrl: 'https://geekscreed.com',
-    cover_image: '',
     social: {
-      twitter: 'g33kscr33d',
-      facebook: 'g33kscr33d',
-      instagram: 'g33kscr33d',
-      github: 'GeeksCreed'
+      twitter: '',
+      facebook: '',
+      instagram: '',
+      github: ''
     },
     config: {
       postsPerPage: 10,
-      disqus: 'geekscreed'
+      disqus: ''
     }
   },
-  // pathPrefix: '/geekscreed.com',
+  pathPrefix: '',
   mapping: {
     // "MarkdownRemark.frontmatter.tags": `TagsYaml`,
     "MarkdownRemark.frontmatter.author": `AuthorsYaml`,
@@ -25,8 +26,15 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`,
+        path: path.resolve(`src/pages`),
         name: 'pages',
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: path.resolve(`src/assets`),
+        name: 'assets',
       },
     },
     {
@@ -57,82 +65,57 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `./src/data/`,
+        path: path.resolve(`./src/data/`),
       },
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-sitemap`,
-    ...(
-      process.env.NODE_ENV === 'production' ? [
-        {
-          resolve: "gatsby-plugin-guess-js",
-          options: {
-            // Find the view id in the GA admin in a section labeled "views"
-            GAViewID: `184855678`,
-            minimumThreshold: 0.03,
-            // The "period" for fetching analytic data.
-            period: {
-              startDate: new Date("2018-12-1"),
-              endDate: new Date(),
-            },
-          },
-        },
-        {
-          resolve: `gatsby-plugin-google-analytics`,
-          options: {
-            trackingId: `UA-129019237-1`,
-          },
-        },
-        {
-          resolve: `gatsby-plugin-feed`,
-          options: {
-            feeds: [
-              {
-                query: `
-              {
-                allMarkdownRemark(
-                  limit: 1000,
-                  sort: {order: DESC, fields: [frontmatter___date]},
-                  filter: {frontmatter: {draft: {ne: true}}}
-                ) {
-                  edges {
-                    node {
-                      excerpt
-                      html
-                      fields {
-                        slug
-                      }
-                      frontmatter {
-                        title
-                        date
-                      }
-                    }
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        feeds: [
+          {
+            query: `
+          {
+            allMarkdownRemark(
+              limit: 1000,
+              sort: {order: DESC, fields: [frontmatter___date]},
+              filter: {frontmatter: {draft: {ne: true}}}
+            ) {
+              edges {
+                node {
+                  excerpt
+                  html
+                  fields {
+                    slug
+                  }
+                  frontmatter {
+                    title
+                    date
                   }
                 }
-              }            
-              `,
-                output: `rss.xml`
-              },
-            ]
-          }
-        },
-      ] : []
-    ),
+              }
+            }
+          }            
+          `,
+            output: `rss.xml`
+          },
+        ]
+      }
+    },
+    `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: `gatsby-plugin-page-creator`,
       options: {
-        name: `GeeksCreed Tech Blog`,
-        short_name: `GeeksCreed`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/assets/icon.png`,
+        path: `${__dirname}/src/pages`,
       },
     },
-    `gatsby-plugin-offline`,
-    `gatsby-plugin-react-helmet`,
-    'gatsby-plugin-postcss'
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/assets`,
+      },
+    }
   ],
 }
