@@ -288,12 +288,7 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostBySlug(
-    $slug: String!
-    $primaryTag: String
-    $previous: String
-    $next: String
-  ) {
+  query($slug: String!, $primaryTag: String, $previous: String, $next: String) {
     site {
       siteMetadata {
         title

@@ -2,12 +2,12 @@
 
 Ghost casper theme for Gatsby blog.
 
-## Features
+### Features
 
 1. Drafts Post Support
 2. Disqus Embed Support
 
-## Usage
+### Usage
 
 Install the theme using `npm` or `yarn`
 
@@ -25,7 +25,13 @@ In your `gatsby-config.js` file,
 
 ```js
 module.exports = {
-  __experimentalThemes: ['gatsby-theme-ghost-casper'],
+  plugins: [
+    {
+      resolve: 'gatsby-theme-ghost-casper',
+      options: {},
+    },
+    ...
+  ],
 };
 ```
 

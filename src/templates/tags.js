@@ -43,7 +43,7 @@ const TagTemplate = ({ pageContext, data, location }) => {
 export default TagTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostsOnTag($tag: String) {
+  query($tag: String) {
     site {
       siteMetadata {
         title
