@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = {
+module.exports = themeOptions = {
   siteMetadata: {
     title: 'Casper Theme Gatsby',
     author: 'Sasivarnan R',
@@ -10,17 +10,17 @@ module.exports = {
       twitter: '',
       facebook: '',
       instagram: '',
-      github: ''
+      github: '',
     },
     config: {
       postsPerPage: 10,
-      disqus: ''
-    }
+      disqus: '',
+    },
   },
-  pathPrefix: '',
+  pathPrefix: themeOptions.pathPrefix || '',
   mapping: {
     // "MarkdownRemark.frontmatter.tags": `TagsYaml`,
-    "MarkdownRemark.frontmatter.author": `AuthorsYaml`,
+    'MarkdownRemark.frontmatter.author': `AuthorsYaml`,
   },
   plugins: [
     {
@@ -46,7 +46,7 @@ module.exports = {
             options: {
               showCaptions: true,
               maxWidth: 840,
-              quality: 80
+              quality: 80,
             },
           },
           {
@@ -99,10 +99,10 @@ module.exports = {
             }
           }            
           `,
-            output: `rss.xml`
+            output: `rss.xml`,
           },
-        ]
-      }
+        ],
+      },
     },
     `gatsby-plugin-react-helmet`,
     {
@@ -116,6 +116,6 @@ module.exports = {
       options: {
         path: `${__dirname}/src/assets`,
       },
-    }
+    },
   ],
-}
+};
