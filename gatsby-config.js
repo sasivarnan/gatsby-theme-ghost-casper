@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = themeOptions = {
+module.exports = themeOptions => ({
   siteMetadata: {
     title: 'Casper Theme Gatsby',
     author: 'Sasivarnan R',
@@ -118,4 +118,4 @@ module.exports = themeOptions = {
       },
     },
   ],
-};
+});
