@@ -31,14 +31,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const result = await graphql(`
     {
       allMarkdownRemark(
-        sort: {
-          fields: [frontmatter___date]
-          order: DESC
-          ${
-            process.env.NODE_ENV === 'production'
-              ? 'filter: {frontmatter: {draft: {ne: true}}}'
-              : ''
-          }
+        sort: { fields: [frontmatter___date], order: DESC }
+        ${
+          process.env.NODE_ENV === 'production'
+            ? 'filter: {frontmatter: {draft: {ne: true}}}'
+            : ''
         }
         limit: 1000
       ) {
