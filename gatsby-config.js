@@ -99,6 +99,7 @@ module.exports = themeOptions => ({
             }
           }            
           `,
+            title: themeOptions.title,
             output: `rss.xml`,
           },
         ],

@@ -73,6 +73,7 @@ module.exports = {
     {
       resolve: 'gatsby-theme-ghost-casper',
       options: {
+        title: 'Your Site Title', // Required: used for the title of RSS feed
         pathPrefix: '', // path prefix for the website URL
       },
     },
@@ -135,7 +136,3 @@ For detailed usage of gatsby themes, refer [themes documentation](https://www.ga
 ## Copyright & License
 
 Copyright (c) 2013-2019 Ghost Foundation / Sasivarnan R - Released under the [MIT license](LICENSE).
-
-```
-
-```
