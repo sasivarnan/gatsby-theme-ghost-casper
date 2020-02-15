@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { getPrimaryTag } from '../utils/tags';
 import GatsbyImage from 'gatsby-image';
+
+import { getPrimaryTag } from '../utils/tags';
 import Icons from './Icons';
 
 const AuthorsList = ({ author }) => {
@@ -12,11 +13,11 @@ const AuthorsList = ({ author }) => {
         <li key={author.id} className='author-list-item'>
           <div className='author-name-tooltip'>{author.name}</div>
 
-          {author.profileImage ? (
+          {author.profileImageFile ? (
             <Link to={`/author/${author.id}`} className='static-avatar'>
-              <img
+              <GatsbyImage
                 className='author-profile-image'
-                src={author.profileImage}
+                fixed={author.profileImageFile.childImageSharp.fixed}
                 alt={author.name}
               />
             </Link>

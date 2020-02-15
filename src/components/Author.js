@@ -1,15 +1,16 @@
 import React from 'react';
+import { Link } from 'gatsby';
+import Image from 'gatsby-image';
 
 import Icons from './Icons';
-import { Link } from 'gatsby';
 
 const Author = ({ author }) => (
   <footer className='post-full-footer'>
     <div className='author-card'>
-      {author.profileImage ? (
-        <img
+      {author.profileImageFile ? (
+        <Image
           className='author-profile-image'
-          src={author.profileImage}
+          fixed={author.profileImageFile.childImageSharp.fixed}
           alt={author.name}
         />
       ) : (

@@ -12,7 +12,13 @@ export const postCardFragment = graphql`
       author {
         id
         name
-        profileImage
+        profileImageFile {
+          childImageSharp {
+            fixed(width: 30) {
+              ...GatsbyImageSharpFixed
+            }
+          }
+        }
       }
       tags
       featuredImage {

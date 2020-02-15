@@ -2,7 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
 const _ = require('lodash');
-const { createFilePath } = require('gatsby-source-filesystem');
+const {
+  createFilePath,
+  createRemoteFileNode,
+} = require('gatsby-source-filesystem');
 
 // Make sure the data directory exists
 exports.onPreBootstrap = ({ store, reporter }) => {
@@ -64,6 +67,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             facebook
             website
             id
+            profileImageFile {
+              childImageSharp {
+                fixed(width: 100) {
+                  base64
+                  width
+                  height
+                  src
+                  srcSet
+                }
+              }
+            }
           }
         }
       }
@@ -127,8 +141,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   });
 };
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions;
+exports.onCreateNode = async ({
+  node,
+  actions,
+  getNode,
+  store,
+  cache,
+  createNodeId,
+}) => {
+  const { createNodeField, createNode } = actions;
 
   if (node.internal.type === `MarkdownRemark`) {
     const value = createFilePath({ node, getNode });
@@ -137,5 +158,23 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       node,
       value,
     });
+  }
+
+  if (node.internal.type === `AuthorsYaml` && node.profileImage) {
+    let fileNode;
+    try {
+      fileNode = await createRemoteFileNode({
+        url: node.profileImage,
+        parentNodeId: node.id,
+        createNode,
+        createNodeId,
+        cache,
+        store,
+      });
+    } catch (error) {}
+
+    if (fileNode) {
+      node.profileImageFile___NODE = fileNode.id;
+    }
   }
 };

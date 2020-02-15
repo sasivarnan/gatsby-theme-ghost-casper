@@ -353,7 +353,13 @@ export const pageQuery = graphql`
           location
           facebook
           twitter
-          profileImage
+          profileImageFile {
+            childImageSharp {
+              fixed(width: 60) {
+                ...GatsbyImageSharpFixed
+              }
+            }
+          }
           website
         }
       }

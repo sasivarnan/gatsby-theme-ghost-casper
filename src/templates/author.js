@@ -1,6 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Helmet from 'react-helmet';
+import Image from 'gatsby-image';
 
 import Layout from '../components/Layout';
 import PostList from '../components/PostList';
@@ -31,10 +32,10 @@ const AuthorTemplate = ({ pageContext, data, location }) => {
         <div className='inner'>
           <Navigation location={location} navItems={navItems} />
           <div className='site-header-content'>
-            {author.profileImage && (
-              <img
+            {author.profileImageFile && (
+              <Image
                 className='author-profile-image'
-                src={author.profileImage}
+                fixed={author.profileImageFile.childImageSharp.fixed}
                 alt={author.name}
               />
             )}
