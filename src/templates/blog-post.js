@@ -248,7 +248,7 @@ class BlogPostTemplate extends React.Component {
 
         <div className='floating-header' ref={this.headerRef}>
           <div className='floating-header-logo'>
-            <Link to={siteUrl}>
+            <Link to='/'>
               <img src={logo} alt={`${siteTitle} logo`} />
               <span>{siteTitle}</span>
             </Link>
