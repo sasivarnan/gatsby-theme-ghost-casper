@@ -129,7 +129,7 @@ Your Awesome Blog Content
 
 ## Example Site
 
-- GeeksCreed - [Source](https://github.com/geekscreed/geekscreed.com/), [Demo](https://geekscreed.com/)
+- GeeksCreed - [Source](https://github.com/geekscreed/geekscreed.com/), [Demo](https://old.geekscreed.com/)
 
 For detailed usage of gatsby themes, refer [themes documentation](https://www.gatsbyjs.org/docs/themes/) of Gatsby.
 
